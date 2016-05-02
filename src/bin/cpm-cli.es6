@@ -5,8 +5,7 @@ const path = require('path');
 
 const nopt = require('nopt');
 
-
-import ARGS from './args';
+import CPM from '../conf/cpm';
 
 (function() {
 
@@ -14,17 +13,25 @@ import ARGS from './args';
 
     const ERR = Message => console.warn('cpm: ' + Message);
     
+    const NAME = process.argv[2]
     // Command script path
     const SCRIPT_SRC = path.join(
         __dirname,
-        '../lib/' + process.argv[2] + '.js'
+        '../lib/' + NAME + '.js'
     );
     
     fs.stat(SCRIPT_SRC, function(ERROR, STATUS) {
         if (ERROR === null) {
             
-            const SCRIPT = require(SCRIPT_SRC);
-            console.log(SCRIPT);
+            const {
+                ARGS: {OPTS = {}, SHORTHAND = {}} = {},
+                
+                default: SCRIPT
+            } = require(SCRIPT_SRC);
+            
+            process.title = `cpm: ${NAME}`;
+            
+            SCRIPT(nopt(OPTS, SHORTHAND, process.argv, 3), new CPM(NAME));
             process.exit(0);
             
         }
@@ -34,7 +41,5 @@ import ARGS from './args';
             process.exit(1);
         }
     });
-
-    console.log(nopt(ARGS.OPTS, ARGS.SHORTHAND, process.argv));
 
 })();
