@@ -1,0 +1,6 @@
+#!/bin/sh
+
+base=`dirname "$0"`
+CHEDDAR_EXE=`$base/cpm-cli.js`
+
+"$CHEDDAR_EXE" "$@"
