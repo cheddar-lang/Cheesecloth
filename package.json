@@ -12,6 +12,7 @@
     "grunt-babel": "^6.0.0",
     "grunt-cli": "^1.2.0",
     "load-grunt-tasks": "^3.5.0",
+    "node.svn": "^0.1.8",
     "nopt": "^3.0.6",
     "path": "^0.12.7"
   }
