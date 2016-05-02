@@ -1,3 +1,8 @@
 export default {
-    OPT: {}
+    OPTS: {
+        
+    },
+    SHORTHAND: {
+        
+    }
 }
