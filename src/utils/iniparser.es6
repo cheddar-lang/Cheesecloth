@@ -14,6 +14,42 @@ function INIParse(text){
 		var current = text[0];
 		var index = 0;
 		
+		// helper functions
+		const hasCharsLeft = () =>
+			index < text.length;
+		
+		const startsSection = chr =>
+			chr === "[";
+		
+		const endsSection = chr =>
+			chr === "]";
+		
+		const ALPHABET_REGEX = /^[A-Za-z]$/;
+		
+		const isAlphabetic = chr =>
+			ALPHABET_REGEX.test(chr);
+		
+		const ESCAPE_REGEX = /^[=\\]$/;
+		
+		const escapable = chr =>
+			ESCAPE_REGEX.test(chr);
+		
+		const isQuote = chr =>
+			chr === "'";
+		
+		const isComment = chr =>
+			chr === ";";
+		
+		const isAssignment = chr =>
+			chr === "=";
+		
+		const nextChar = () =>
+			current = text[++index];
+		
+		const peekNextChar = () =>
+			text[1+index];
+		
+		// tokenize portion
 		while(hasCharsLeft()){
 			if(startsSection(current)){
 				var sectionName = nextChar();
@@ -40,7 +76,13 @@ function INIParse(text){
 				} else {
 					prop = current;
 					while(!isAssignment(peekNextChar()) && hasCharsLeft()){
-						prop += nextChar();
+						nextChar();
+						if(current === "\\"){
+							if(escapable(peekNextChar())){
+								nextChar();
+							}
+						}
+						prop += current;
 					}
 				}
 				wrapper[0] = prop;
@@ -68,59 +110,32 @@ function INIParse(text){
 			nextChar();
 		}
 		
-		// helper functions
-		function hasCharsLeft(){
-			return index < text.length;
-		}
-		
-		function startsSection(chr){
-			return chr === "[";
-		}
-		
-		function endsSection(chr){
-			return chr === "]";
-		}
-		
-		function isAlphabetic(chr){
-			return /^[A-Za-z]$/.test(chr);
-		}
-		
-		function isQuote(chr){
-			return chr === "'";
-		}
-		
-		function isComment(chr){
-			return chr === ";";
-		}
-		
-		function isAssignment(chr){
-			return chr === "=";
-		}
-		
-		function nextChar(){
-			return current = text[++index];
-		}
-		
-		function peekNextChar(){
-			return text[1+index];
-		}
-		
 		// return statement
 		return tokens;
 	}
 	
 	// parse the ini
-	var tokenized = Tokenize(text);
+	let tokenized = Tokenize(text);
 	
 	// parent object of ini
-	var result = {};
+	let result = {};
 	
 	while(tokenized.length){
-		var name = tokenized.shift();
+		let name = tokenized.shift();
 		result[name] = {};
 		while(Array.isArray(tokenized[0]) && tokenized.length){
-			var token = tokenized.shift();
-			result[name][token[0]] = token[1];
+			let token = tokenized.shift();
+			let capt = /\[(.+?)\]$/
+			if(token[0].endsWith("[]")){
+				let modName = token[0].slice(0,-2);
+				result[name][modName] = result[name][modName] || [];
+				result[name][modName].push(token[1]);
+			} else if(capt.test(token[0])){ 
+				let modName = token[0].slice(0, token[0].search(capt));
+				let prop = token[0].match(capt)[1];
+				result[name][modName] = result[name][modName] || {};
+				result[name][modName][prop] = token[1];
+			} else result[name][token[0]] = token[1];
 		}
 	}
 	
