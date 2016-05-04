@@ -36,8 +36,7 @@ import CPM from '../conf/cpm';
             
         }
         else {
-            console.log(STATUS, ERROR);
-            ERR(`'${process.argv[2]}' is not a Cheesecloth command. See 'cpm help'`);
+            ERR(`'${process.argv[2]||""}' is not a Cheesecloth command. See 'cpm help'`);
             process.exit(1);
         }
     });

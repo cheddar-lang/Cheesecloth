@@ -10,9 +10,9 @@ function INIParse(text){
 	// of strings (sections) and arrays (values)
 	function Tokenize(text){
 		// initial config
-		var tokens = [];
-		var current = text[0];
-		var index = 0;
+		let tokens = [];
+		let current = text[0];
+		let index = 0;
 		
 		// helper functions
 		const hasCharsLeft = () =>
@@ -52,7 +52,7 @@ function INIParse(text){
 		// tokenize portion
 		while(hasCharsLeft()){
 			if(startsSection(current)){
-				var sectionName = nextChar();
+				let sectionName = nextChar();
 				while(!endsSection(peekNextChar())){
 					if(!hasCharsLeft())
 						throw new SyntaxError("met EOF whilst expecting \"]\"");
@@ -64,9 +64,9 @@ function INIParse(text){
 					nextChar();
 				}
 			} else if(isAlphabetic(current) || isQuote(current)){
-				var wrapper = [];
-				var prop;
-				var val;
+				let wrapper = [];
+				let prop;
+				let val;
 				if(isQuote(current)){
 					prop = nextChar();
 					while(!isQuote(peekNextChar()) && hasCharsLeft()){

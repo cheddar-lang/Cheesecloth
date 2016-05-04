@@ -15,6 +15,8 @@ export const ARGS = {
     }
 };
 
+const INDENT = "    ";
+
 export default function(ARGS, CPM) {
 
     const PACKAGE_NAME = ARGS.argv.remain[0];
@@ -45,14 +47,14 @@ export default function(ARGS, CPM) {
             PATH
         ], (ERROR, STDOUT, STDERR) => {
             if (ERROR !== null) {
-                console.log(`Could not obtain config:`);
+                console.error(`Could not obtain config:`);
                 console.error(
                     // indent the error
-                    STDERR.replace(/^/gm, '    ')
+                    STDERR.replace(/^/gm, INDENT)
                 );
 
                 // Die after failing to find a config
-                CPM.die(`Failed to locate config, aborting...`);
+                CPM.die(`Failed to locate package, aborting.`);
             }
 
             console.log(); // Empty line
@@ -66,31 +68,48 @@ export default function(ARGS, CPM) {
                 } = {}
             } = INIParser(STDOUT);
 
-            console.log(`Retrieved package:
-${name.yellow.bold.underline}, ${desc.underline}`);
+            console.log(`${"Successfully".green.bold} located package:
+${name.yellow.bold.underline}, ${desc.underline}\n`);
 
-            const INIT_DIR = '/usr/local/lib';
+            const INIT_DIR = '/usr/local/lib'; // DO NOT ADD A `/` at the end
 
-            function InitializePackage(...args) {
-                console.log(args)
+            function InitializePackage(ERROR) {
+                if (ERROR) {
+                    CPM.die(`Error during package initalization:
+An error occured creating the ${"cpml".underline} directory:
+${INDENT}${(ERROR.code || "[unknown]").red.bold}
+Perhaps attempt running this script with '${"sudo".bold}'?`);
+                }
+                    
                 fs.mkdir(`${INIT_DIR}/cpml/${name}`, 777, function() {
                     fs.writeFile(
-                        `${INIT_DIR}/cpml/${name}/conf.ini`,
+                        `${INIT_DIR}/cpml/${name}/inf.ini`,
                         `[ins]
 src=${PATH}
 tim=${Date.now()}
 [data]
 nam=${name}
-`,
-                    (ERROR) => {
-                        console.log(ERROR);
-                    });
+`, (ERROR) => {
+                            if (ERROR) {
+                                CPM.die(`Error during inf initialization
+${INDENT}${(ERROR.code || "[unknown]").red.bold}
+Perhaps attempt running this script with '${"sudo".bold}'?`);
+                            }
+                            else {
+                                fs.writeFile(
+                                    `${INIT_DIR}/cpml/${name}/config.ini.ini`, STDOUT,
+                                    function() {
+                                        
+                                });
+                            }
+                        });
                 });
             }
 
             // Check for cpml
             fs.access(`${INIT_DIR}/cpml`, fs.F_OK, (ERROR) => {
                 if (ERROR) {
+                    console.log(`Could not find ${"cpml".underline} directory`);
                     fs.access(INIT_DIR, fs.F_OK, (ERROR) => {
                         if (ERROR) {
                             CPM.die(`Could not locate ${
@@ -98,6 +117,7 @@ nam=${name}
                             }, ${'aborting'.red}.`);
                         }
                         else {
+                            console.log(`Atempting to create ${"cpml".underline} directory...`);
                             fs.mkdir(`${INIT_DIR}/cpml`, 777, InitializePackage)
                         }
                     });
