@@ -71,19 +71,21 @@ export default function(ARGS, CPM) {
             console.log(`${"Successfully".green.bold} located package:
 ${name.yellow.bold.underline}, ${desc.underline}\n`);
 
-            const INIT_DIR = '/usr/local/lib'; // DO NOT ADD A `/` at the end
-
+            const INIT_DIR = '/usr/share'; // DO NOT ADD A `/` at the end
+            const DIR_NAME = 'cpmlibs';
+            
             function InitializePackage(ERROR) {
                 if (ERROR) {
                     CPM.die(`Error during package initalization:
-An error occured creating the ${"cpml".underline} directory:
+An error occured creating the ${DIR_NAME.underline} directory:
 ${INDENT}${(ERROR.code || "[unknown]").red.bold}
 Perhaps attempt running this script with '${"sudo".bold}'?`);
                 }
-                    
-                fs.mkdir(`${INIT_DIR}/cpml/${name}`, 777, function() {
+                 
+                process.umask(0)   
+                fs.mkdir(`${INIT_DIR}/${DIR_NAME}/${name}`, '0777', function() {
                     fs.writeFile(
-                        `${INIT_DIR}/cpml/${name}/inf.ini`,
+                        `${INIT_DIR}/${DIR_NAME}/${name}/inf.ini`,
                         `[ins]
 src=${PATH}
 tim=${Date.now()}
@@ -97,7 +99,7 @@ Perhaps attempt running this script with '${"sudo".bold}'?`);
                             }
                             else {
                                 fs.writeFile(
-                                    `${INIT_DIR}/cpml/${name}/config.ini.ini`, STDOUT,
+                                    `${INIT_DIR}/${DIR_NAME}/${name}/config.ini`, STDOUT,
                                     function() {
                                         
                                 });
@@ -105,11 +107,13 @@ Perhaps attempt running this script with '${"sudo".bold}'?`);
                         });
                 });
             }
+            
+            
 
-            // Check for cpml
-            fs.access(`${INIT_DIR}/cpml`, fs.F_OK, (ERROR) => {
+            // Check for cpmlibs
+            fs.access(`${INIT_DIR}/${DIR_NAME}`, fs.F_OK, (ERROR) => {
                 if (ERROR) {
-                    console.log(`Could not find ${"cpml".underline} directory`);
+                    console.log(`Could not find ${DIR_NAME.underline} directory`);
                     fs.access(INIT_DIR, fs.F_OK, (ERROR) => {
                         if (ERROR) {
                             CPM.die(`Could not locate ${
@@ -117,8 +121,11 @@ Perhaps attempt running this script with '${"sudo".bold}'?`);
                             }, ${'aborting'.red}.`);
                         }
                         else {
-                            console.log(`Atempting to create ${"cpml".underline} directory...`);
-                            fs.mkdir(`${INIT_DIR}/cpml`, 777, InitializePackage)
+                            console.log(`Atempting to create ${DIR_NAME.underline} directory...`);
+                            process.umask(0);
+                            
+                            // permission all the things
+                            fs.mkdir(`${INIT_DIR}/${DIR_NAME}`, '0777', InitializePackage);
                         }
                     });
                 }
@@ -127,11 +134,6 @@ Perhaps attempt running this script with '${"sudo".bold}'?`);
                 }
             });
 
-            // loc: /usr/local/lib/cpml
-            // if /usr/local/lib
-            //    mkdir cpml
-            // else
-            //    error
         });
     }
 

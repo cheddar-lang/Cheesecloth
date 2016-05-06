@@ -12,10 +12,15 @@
     "grunt": "^1.0.1",
     "grunt-babel": "^6.0.0",
     "grunt-cli": "^1.2.0",
+    "grunt-contrib-copy": "^1.0.0",
     "load-grunt-tasks": "^3.5.0",
     "nopt": "^3.0.6",
     "path": "^0.12.7",
     "seedrandom": "^2.4.2",
     "valid-url": "^1.0.9"
+  },
+  "scripts": {
+    "postinstall": "grunt",
+    "test": "grunt; sudo ./dist/src/bin/cpm install math"
   }
 }
