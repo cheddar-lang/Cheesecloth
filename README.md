@@ -36,7 +36,8 @@ Ensure that a `dist` directory exists. If it doesn't, run `npm build`, if that d
 To run `cpm` simply run `./dist/bin/cpm`. If you need help, run `./dist/bin/cpm help`. If you don't want to type `./dist/bin/cpm` navigate to your `.bash_profile` or `.bashrc` and add:
 
 ```bash
-alias cpm="/path/to/dist/bin/cpm "
+alias sudo='sudo '
+alias cpm='/path/to/dist/bin/cpm'
 ```
 
 ---
