@@ -84,14 +84,14 @@ Perhaps attempt running this script with '${"sudo".bold}'?` +
 // Check for SIP
 (os.platform() === "darwin" && +os.release().split('.')[0] >= 15
     ? `
+
 ${"WARNING:".yellow.bold} Your system has been detected as runing ${"OS X 10.11 or above".bold}.
  these OS X versions have "${"System Integrity Protection".underline}",
   which prevents access to various system directories.
  This includes the ${`${INIT_DIR}/`.underline} directory,
   in which this script was provided with insufficient permisisons to modify
  Attempt to run this script with ${"root".bold},
-  or disable System Integrety Protection
-  (See: ${"http://apple.stackexchange.com/a/208481/44905".underline}).
+  or disable System Integrety Protection (See: ${"http://apple.stackexchange.com/a/208481/44905".underline}).
  
  Alternatively you may attempt to to modify the initalization directory by running 'cpm config INIT_DIR=/usr/local/share'` : ""));
                 }
