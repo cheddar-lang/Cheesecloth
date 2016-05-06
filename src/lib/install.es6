@@ -1,4 +1,5 @@
 const fs = require('fs');
+const os = require('os');
 const PROCESS = require('child_process');
 const seedrand = require('seedrandom');
 const colors = require('colors');
@@ -79,7 +80,15 @@ ${name.yellow.bold.underline}, ${desc.underline}\n`);
                     CPM.die(`Error during package initalization:
 An error occured creating the ${DIR_NAME.underline} directory:
 ${INDENT}${(ERROR.code || "[unknown]").red.bold}
-Perhaps attempt running this script with '${"sudo".bold}'?`);
+Perhaps attempt running this script with '${"sudo".bold}'?` + 
+// Check for SIP
+os.platform() === "darwin" & +os.release().split('.')[0] >= 15
+    ? `${"WARNING:".yellow.bold} Your system has been detected as runing ${"OS X 10.11 or above".bold}.
+ these OS X versions have "${"System Integrity Protection".underline}" which prevents access to various system directories.
+ This includes the ${`${INIT_DIR}/`.underline} directory in which this script was provided with insufficient permisisons to modify
+ Attempt to run this script with ${"root".bold} or disable System Integrety Protection (See: ${"http://apple.stackexchange.com/a/208481/44905".underline}).
+ 
+ Alternatively you may attempt to to modify the initalization directory by running 'cpm config INIT_DIR=/usr/local/share'` : "");
                 }
                  
                 process.umask(0)   
