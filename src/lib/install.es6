@@ -83,7 +83,7 @@ Perhaps attempt running this script with '${"sudo".bold}'?`);
                 }
                  
                 process.umask(0)   
-                fs.mkdir(`${INIT_DIR}/${DIR_NAME}/${name}`, '0777', function() {
+                fs.mkdir(`${INIT_DIR}/${DIR_NAME}/${name}`, 0o777, function() {
                     fs.writeFile(
                         `${INIT_DIR}/${DIR_NAME}/${name}/inf.ini`,
                         `[ins]
@@ -125,7 +125,7 @@ Perhaps attempt running this script with '${"sudo".bold}'?`);
                             process.umask(0);
                             
                             // permission all the things
-                            fs.mkdir(`${INIT_DIR}/${DIR_NAME}`, '0777', InitializePackage);
+                            fs.mkdir(`${INIT_DIR}/${DIR_NAME}`, 0o777, InitializePackage);
                         }
                     });
                 }
