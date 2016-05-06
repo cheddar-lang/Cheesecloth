@@ -22,6 +22,6 @@
   "scripts": {
     "postinstall": "grunt",
     "build": "grunt",
-    "test": "grunt && sudo ./dist/bin/cpm install math"
+    "test": "grunt && which node && sudo ./dist/bin/cpm install math"
   }
 }
