@@ -2,6 +2,6 @@
 
 base=`dirname "$0"`
 CHEDDAR_EXE="$base/cpm-cli.js"
-NODE_EXE="node"
+NODE_EXE=`which node`
 
 "$NODE_EXE" "$CHEDDAR_EXE" "$@"
