@@ -7,6 +7,6 @@ cache:
 sudo: required
 
 before_script:
- - sudo $(which chmod) 777 ./dist/bin/cpm
- - sudo $(which chown) $(whoami) ./dist/bin/cpm
+ - sudo chmod a+x ./dist/bin/cpm
+ - sudo chmod a+x ./dist/bin/cpm-cli.js
 script: sudo $(which npm) test
