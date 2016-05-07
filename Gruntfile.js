@@ -1,3 +1,5 @@
+const exec = require('child_process').exec;
+
 module.exports = function(grunt) {
 
     // Hack to hide run headers
@@ -62,7 +64,16 @@ module.exports = function(grunt) {
         if (grunt.option('memeify') === true)
             grunt.task.run('copy:memeify');
     });
-    grunt.registerTask('install', 'installs and initalizes cpm files and directories', DEFAULT.concat([
-        'copy:cpmrc'
-    ]));
+    grunt.registerTask('install', 'installs and initalizes cpm files and directories', () => {
+        grunt.task.run(DEFAULT.concat([
+            'copy:cpmrc'
+        ]));
+        
+        if (grunt.option('alias') === true)
+            exec(
+                `echo -e "alias sudo='sudo '\nalias cpm='${__dirname}/dist/bin/cpm'" >> $([[ -f ~/.bash_profile ]] && echo ~/.bash_profile || echo ~/.bashrc)`,
+                { shell: '/bin/bash' }
+            );
+        
+    });
 };
