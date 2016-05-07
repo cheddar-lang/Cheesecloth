@@ -32,7 +32,7 @@ import CPM from '../conf/cpm';
             
             process.title = `cpm: ${NAME}`;
             
-            SCRIPT(nopt(OPTS, SHORTHAND, process.argv, 3), new CPM(NAME));
+            SCRIPT(nopt(OPTS, SHORTHAND, process.argv, 3), new CPM(NAME), process.argv);
             
         }
         else {

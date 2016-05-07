@@ -1,5 +1,5 @@
 module.exports = function(grunt) {
-    
+
     // Hack to hide run headers
     grunt.log.header = function() {};
 
@@ -22,7 +22,7 @@ module.exports = function(grunt) {
             }
         },
         copy: {
-            main: {
+            bin: {
                 options: {
                     mode: "777"
                 },
@@ -32,9 +32,37 @@ module.exports = function(grunt) {
                     'bin/cpm'
                 ],
                 dest: 'dist/'
+            },
+            
+            cpmrc: {
+                expand: true,
+                cwd: 'src/tmp',
+                src: ['.cpmrc'],
+                dest: process.env[process.platform === 'win32' ? 'USERPROFILE' : 'HOME']
+            },
+            
+            memeify: {
+                expand: true,
+                cwd: 'dist',
+                dest: 'dist/',
+                src: ['lib/*.js'],
+                rename: (PATH, NAME) => PATH + NAME
+                    .replace('install', 'juic')
+                    .replace('help', 'halp')
+                    .replace('config', 'juicr')
             }
         }
     });
-
-    grunt.registerTask('default', ['copy', 'babel']);
+    
+    const DEFAULT = ['copy:bin', 'babel'];
+    
+    grunt.registerTask('default', DEFAULT, () => {
+        grunt.task.run(DEFAULT);
+        
+        if (grunt.option('memeify') === true)
+            grunt.task.run('copy:memeify');
+    });
+    grunt.registerTask('install', 'installs and initalizes cpm files and directories', DEFAULT.concat([
+        'copy:cpmrc'
+    ]));
 };

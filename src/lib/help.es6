@@ -5,7 +5,8 @@ export default function(ARGS, CPM) {
     console.log(`usage: cpm: <command> [<args>]
 
 where <command> is any of:
-    help, install
+    help, inig, config,
+    install
 
 
 specify configuration in the ini file:

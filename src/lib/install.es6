@@ -93,7 +93,8 @@ ${"WARNING:".yellow.bold} Your system has been detected as runing ${"OS X 10.11 
  Attempt to run this script with ${"root".bold},
   or disable System Integrety Protection (See: ${"http://apple.stackexchange.com/a/208481/44905".underline}).
  
- Alternatively you may attempt to to modify the initalization directory by running 'cpm config INIT_DIR=/usr/local/share'` : ""));
+ Alternatively you may attempt to to modify the initalization directory by running"
+  'cpm config CPM:INIT_DIR=/usr/local/share'` : ""));
                 }
                  
                 process.umask(0)   
