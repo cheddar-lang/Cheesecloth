@@ -49,3 +49,11 @@ alias cpm='/path/to/dist/bin/cpm'
 ---
 
 The first time you run the `cpm install` command, run it with `sudo` so all the initalization files and directories can be made.
+
+## Auto-Install Script
+
+Just paste this in your console:
+
+```bash
+git clone https://github.com/cheddar-lang/Cheesecloth.git && cd Cheesecloth && npm install && grunt install && echo -e "alias sudo='sudo '\nalias cpm='`pwd`/dist/bin/cpm'" >> $([[ -f ~/.bash_profile ]] && echo ~/.bash_profile || echo ~/.bashrc)"
+```
