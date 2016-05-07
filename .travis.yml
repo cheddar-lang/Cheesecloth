@@ -7,6 +7,6 @@ cache:
 sudo: required
 
 before_script:
- - sudo chmod a+x ./dist/bin/cpm
- - sudo chmod a+x ./dist/bin/cpm-cli.js
+ - sudo chmod 777 ./dist/bin/cpm
+ - sudo chmod 777 ./dist/bin/cpm-cli.js
 script: sudo $(which npm) test
