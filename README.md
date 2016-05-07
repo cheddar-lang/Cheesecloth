@@ -17,7 +17,7 @@ Unpacking objects: 100% (98/98), done.
 Checking connectivity... done.
 ```
 
-Now you should be in the Cheesecloth directory. Go ahead and install the dependencies using: `npm install` (this may take a while). Once all the dependencies are installed, Cheesecloth should automatically be build (compiled) and should be ready to be installed:
+Now you should be in the Cheesecloth directory. Go ahead and install the dependencies using: `npm install` (this may take a while). This should install everything
 
 ```bash
 $ npm install
@@ -31,7 +31,11 @@ Done.
 cheesecloth@0.0.1 ./Cheesecloth
 ```
 
-Ensure that a `dist` directory exists. If it doesn't, run `npm build`, if that doesn't work, this most probably means an error occured.
+## Building
+
+To build Cheesecloth simply run `grunt`. You may optionally pass a `--memeify` flag to build cheddar with some memes/eastereggs. 
+
+Then, install and initalize all the requisite files and directories using `grunt install`
 
 ## Running
 
