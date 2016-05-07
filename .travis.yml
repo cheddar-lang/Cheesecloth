@@ -8,4 +8,5 @@ sudo: required
 
 before_script:
  - chmod +x ./dist/bin/cpm
+ - chown $(whoami) ./dist/bin/cpm
 script: npm test
