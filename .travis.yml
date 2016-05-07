@@ -7,6 +7,6 @@ cache:
 sudo: required
 
 before_script:
- - chmod 777 ./dist/bin/cpm
- - chown $(whoami) ./dist/bin/cpm
-script: npm test
+ - sudo chmod 777 ./dist/bin/cpm
+ - sudo chown $(whoami) ./dist/bin/cpm
+script: sudo npm test
