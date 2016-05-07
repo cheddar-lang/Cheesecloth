@@ -5,3 +5,7 @@ cache:
   directories:
     - node_modules
 sudo: required
+
+before_script:
+ - chmod +x ./dist/bin/cpm
+script: npm test
