@@ -10,10 +10,12 @@ import CONFIG from './config';
 
 export const ARGS = {
     OPTS: {
-        "info": Boolean
+        "info": Boolean,
+        "aidep": Boolean
     },
     SHORTHAND: {
-        "i": ["--info"]
+        "i": ["--info"],
+        "d": ["--idep"]
     }
 };
 
@@ -111,10 +113,11 @@ nam=${name}
 Perhaps attempt running this script with '${"sudo".bold}'?`);
                             }
                             else {
+                                console.log("Successfully initalized package");
                                 fs.writeFile(
                                     `${INIT_DIR}/${DIR_NAME}/${name}/config.ini`, STDOUT,
                                     function() {
-                                        
+                                        console.log("Successfully initalized package");
                                 });
                             }
                         });

@@ -13,8 +13,7 @@ import CPM from '../conf/cpm';
 
     const ERR = Message => console.warn('cpm: ' + Message);
     
-    const NAME = process.argv[2]
-    
+    const NAME = process.argv[2] || 'help';
     // Command script path
     const SCRIPT_SRC = path.join(
         __dirname,
