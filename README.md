@@ -31,24 +31,13 @@ Done.
 cheesecloth@0.0.1 ./Cheesecloth
 ```
 
-## Building
+## Building/Installing
 
-To build Cheesecloth simply run `grunt`. You may optionally pass a `--memeify` flag to build cheddar with some memes/eastereggs. 
-
-Then, install and initalize all the requisite files and directories using `grunt install`
+To build and installCheesecloth simply run `grunt`. You may optionally pass a `--memeify` flag to build cheddar with some memes/eastereggs. 
 
 ## Running
 
-To run `cpm` simply run `./dist/bin/cpm`. If you need help, run `./dist/bin/cpm help`. If you don't want to type `./dist/bin/cpm` navigate to your `.bash_profile` or `.bashrc` and add:
-
-```bash
-alias sudo='sudo '
-alias cpm='/path/to/dist/bin/cpm'
-```
-
----
-
-The first time you run the `cpm install` command, run it with `sudo` so all the initalization files and directories can be made.
+To run Cheesecloth simply use the `cpm` command
 
 ## Auto-Install Script
 
