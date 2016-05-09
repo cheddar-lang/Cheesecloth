@@ -5,7 +5,8 @@ const seedrand = require('seedrandom');
 const colors = require('colors');
 
 // Dependencies
-import INIParser from '../utils/iniparser';
+import INI from '../utils/ini';
+import CONFIG from './config';
 
 export const ARGS = {
     OPTS: {
@@ -51,7 +52,7 @@ export default function(ARGS, CPM) {
                 console.error(`Could not obtain config:`);
                 console.error(
                     // indent the error
-                    STDERR.replace(/^/gm, INDENT)
+                    STDERR.replace(/^/gm, "    ")
                 );
 
                 // Die after failing to find a config
@@ -67,19 +68,19 @@ export default function(ARGS, CPM) {
                         desc = "",
                         deps = []
                 } = {}
-            } = INIParser(STDOUT);
+            } = INI.parse(STDOUT);
 
             console.log(`${"Successfully".green.bold} located package:
 ${name.yellow.bold.underline}, ${desc.underline}\n`);
-
-            const INIT_DIR = '/usr/share'; // DO NOT ADD A `/` at the end
-            const DIR_NAME = 'cpmlibs';
+            
+            const INIT_DIR = CONFIG(true, "CPM:INIT_DIR") || '/usr/share'; // DO NOT ADD A `/` at the end
+            const DIR_NAME = CONFIG(true, "CPM:DIR_NAME") || 'cpmlibs';
             
             function InitializePackage(ERROR) {
                 if (ERROR) {
                     CPM.die(`Error during package initalization:
 An error occured creating the ${DIR_NAME.underline} directory:
-${INDENT}${(ERROR.code || "[unknown]").red.bold}
+    ${(ERROR.code || "[unknown]").red.bold}
 Perhaps attempt running this script with '${"sudo".bold}'?` + 
 // Check for SIP
 (os.platform() === "darwin" && +os.release().split('.')[0] >= 15
@@ -90,10 +91,7 @@ ${"WARNING:".yellow.bold} Your system has been detected as runing ${"OS X 10.11 
   which prevents access to various system directories.
  This includes the ${`${INIT_DIR}/`.underline} directory,
   in which this script was provided with insufficient permisisons to modify
- Attempt to run this script with ${"root".bold},
-  or disable System Integrety Protection (See: ${"http://apple.stackexchange.com/a/208481/44905".underline}).
- 
- Alternatively you may attempt to to modify the initalization directory by running"
+ Attempt to fix this by modifying the initalization directory by running"
   'cpm config CPM:INIT_DIR=/usr/local/share'` : ""));
                 }
                  
@@ -109,7 +107,7 @@ nam=${name}
 `, (ERROR) => {
                             if (ERROR) {
                                 CPM.die(`Error during inf initialization
-${INDENT}${(ERROR.code || "[unknown]").red.bold}
+    ${(ERROR.code || "[unknown]").red.bold}
 Perhaps attempt running this script with '${"sudo".bold}'?`);
                             }
                             else {
@@ -140,7 +138,7 @@ Perhaps attempt running this script with '${"sudo".bold}'?`);
                             process.umask(0);
                             
                             // permission all the things
-                            fs.mkdir(`${INIT_DIR}/${DIR_NAME}`, 0o777, InitializePackage);
+                            fs.mkdir(`${INIT_DIR}/${DIR_NAME}`, 0o775, InitializePackage);
                         }
                     });
                 }
