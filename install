@@ -1,0 +1,1 @@
+git clone https://github.com/cheddar-lang/Cheesecloth.git && cd Cheesecloth && npm install && grunt install --alias --memeify && cpm config CPM:INIT_DIR=/usr/local/share && sudo cpm install avocad
