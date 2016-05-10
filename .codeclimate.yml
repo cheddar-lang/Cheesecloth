@@ -2,19 +2,19 @@ engines:
   eslint:
     enabled: true
     config:
-      - .es6
-      - .js
+      extensions:
+        - .es6
+        - .js
   duplication:
     enabled: true
     config:
       languages:
         javascript:
-          - .es6
-          - .js
+          extensions:
+            - .es6
+            - .js
   shellcheck:
     enabled: true
-    config:
-      - src/bin/cpm
 ratings:
   paths:
     - src/**/*.js
