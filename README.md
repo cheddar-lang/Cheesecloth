@@ -1,8 +1,9 @@
 # Cheesecloth
 
-[![Join the chat at https://gitter.im/cheddar-lang/Cheesecloth](https://badges.gitter.im/cheddar-lang/Cheesecloth.svg)](https://gitter.im/cheddar-lang/Cheesecloth?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+<img id="badge" src="cheddar-lang/Cheesecloth.svg" alt="badge">
 [![Build Status](https://travis-ci.org/cheddar-lang/Cheesecloth.svg?branch=master)](https://travis-ci.org/cheddar-lang/Cheesecloth)
 [![Code Climate](https://codeclimate.com/github/cheddar-lang/Cheesecloth/badges/gpa.svg)](https://codeclimate.com/github/cheddar-lang/Cheesecloth)
+[![Join the chat at https://gitter.im/cheddar-lang/Cheesecloth](https://badges.gitter.im/cheddar-lang/Cheesecloth.svg)](https://gitter.im/cheddar-lang/Cheesecloth?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 The Cheddar Package Manager. Often abbreviated as `CPM` (**C**heddar **P**ackage **M**anager).
 
