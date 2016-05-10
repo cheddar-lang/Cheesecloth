@@ -2,6 +2,7 @@
 
 [![Build Status](https://travis-ci.org/cheddar-lang/Cheesecloth.svg?branch=master)](https://travis-ci.org/cheddar-lang/Cheesecloth)
 [![Code Climate](https://codeclimate.com/github/cheddar-lang/Cheesecloth/badges/gpa.svg)](https://codeclimate.com/github/cheddar-lang/Cheesecloth)
+[![Test Coverage](https://codeclimate.com/github/cheddar-lang/Cheesecloth/badges/coverage.svg)](https://codeclimate.com/github/cheddar-lang/Cheesecloth/coverage)
 <img src="https://img.shields.io/david/cheddar-lang/Cheesecloth.svg">
 [![Join the chat at https://gitter.im/cheddar-lang/Cheesecloth](https://badges.gitter.im/cheddar-lang/Cheesecloth.svg)](https://gitter.im/cheddar-lang/Cheesecloth?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
