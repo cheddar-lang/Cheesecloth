@@ -6,8 +6,6 @@ engines:
     config:
       languages:
       - javascript
-  nodesecurity:
-    enabled: true
   shellcheck:
     enabled: true
 ratings:
