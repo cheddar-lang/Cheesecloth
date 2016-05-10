@@ -11,11 +11,13 @@ import CONFIG from './config';
 export const ARGS = {
     OPTS: {
         "info": Boolean,
-        "aidep": Boolean
+        "aidep": Boolean,
+        "global": Boolean
     },
     SHORTHAND: {
         "i": ["--info"],
-        "d": ["--idep"]
+        "d": ["--idep"],
+        "g": ["--global"]
     }
 };
 
@@ -36,7 +38,7 @@ export default function(ARGS, CPM) {
         // get info on package
     }
     else {
-        // == PREFORM INSTALL ==
+        // == PREFORM GLOBAL INSTALL ==
 
         console.log(`Attempting to install ${PACKAGE_NAME.yellow.bold.underline}...`);
 

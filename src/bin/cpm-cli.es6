@@ -7,13 +7,12 @@ const nopt = require('nopt');
 
 import CPM from '../conf/cpm';
 
-(function() {
+const EXEC = function(NAME, CLIARGS) {
 
     process.title = "cpm";
 
     const ERR = Message => console.warn('cpm: ' + Message);
     
-    const NAME = process.argv[2] || 'help';
     // Command script path
     const SCRIPT_SRC = path.join(
         __dirname,
@@ -31,13 +30,19 @@ import CPM from '../conf/cpm';
             
             process.title = `cpm: ${NAME}`;
             
-            SCRIPT(nopt(OPTS, SHORTHAND, process.argv, 3), new CPM(NAME), process.argv);
+            SCRIPT(nopt(OPTS, SHORTHAND, CLIARGS, 3), new CPM(NAME), CLIARGS);
             
         }
         else {
-            ERR(`'${process.argv[2]||""}' is not a Cheesecloth command. See 'cpm help'`);
+            ERR(`'${NAME||""}' is not a Cheesecloth command. See 'cpm help'`);
             process.exit(1);
         }
     });
 
-})();
+};
+
+if (require.main === module) {
+    EXEC(process.argv[2] || 'help', process.argv);
+}
+
+export default EXEC;

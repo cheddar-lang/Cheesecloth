@@ -1,6 +1,6 @@
 language: node_js
 node_js:
-  - 4.4.0
+ - 4.4.0
 cache:
   directories:
     - node_modules
@@ -9,7 +9,8 @@ sudo: required
 before_script:
  - grunt install --alias
 after_script:
-  - codeclimate-test-reporter < lcov.info
+ - istanbul cover test/cli.test.js
+ - codeclimate-test-reporter < coverage/lcov.info
 addons:
     code_climate:
         repo_token: 85571737c8ee5018e12df0176c5f981e1d3cfedca054be60cf92f69bddc6a212

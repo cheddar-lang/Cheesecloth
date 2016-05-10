@@ -23,5 +23,8 @@
   "scripts": {
     "build": "grunt",
     "test": "grunt"
+  },
+  "devDependencies": {
+    "istanbul": "^0.4.3"
   }
 }
