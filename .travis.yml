@@ -10,4 +10,4 @@ before_script:
  - grunt install --alias
 addons:
     code_climate:
-        repo_token: CODE_CLIMATE_TOKEN
+        repo_token: ENV['CODE_CLIMATE_TOKEN']
