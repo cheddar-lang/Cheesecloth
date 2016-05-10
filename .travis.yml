@@ -8,6 +8,8 @@ sudo: required
 
 before_script:
  - grunt install --alias
+after_script:
+  - codeclimate-test-reporter < lcov.info
 addons:
     code_climate:
         repo_token: 85571737c8ee5018e12df0176c5f981e1d3cfedca054be60cf92f69bddc6a212
