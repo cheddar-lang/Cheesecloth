@@ -12,3 +12,6 @@ before_script:
  - sudo chmod 777 ./dist/bin/cpm-cli.js
  - ls -l ./dist/bin
 script: sudo $(which npm) test
+addons:
+    code_climate:
+        repo_token: CODE_CLIMATE_TOKEN
