@@ -17,4 +17,4 @@ after_script:
  - cat ./coverage/coverage.json | codecov
 addons:
     code_climate:
-        repo_token: 85571737c8ee5018e12df0176c5f981e1d3cfedca054be60cf92f69bddc6a212
+        repo_token: ENV['CODE_CLIMATE_TOKEN']
