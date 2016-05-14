@@ -15,6 +15,7 @@ after_script:
   - istanbul cover test/cli.test.js
   - codeclimate-test-reporter < coverage/lcov.info
   - cat ./coverage/coverage.json | codecov
+  - cat ./coverage/coverage.json | coveralls
 addons:
   code_climate:
     repo_token:

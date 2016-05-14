@@ -2,12 +2,22 @@ const fs = require('fs');
 const touch = require('touch');
 const colors = require('colors');
 
+
 import INI from '../utils/ini';
+
+export const ARGS = {
+    OPTS: {
+        "read": Boolean
+    },
+    SHORTHAND: {
+        "r": ["--read"]
+    }
+};
 
 export default function(ARGS, CPM, RAW_ARGS) {
 
     const ROUTINES = ['get'];
-    const MATCH = /^(.+):(.+)=(.+)$/;
+    let MATCH = /^(.+):(.+)=(.+)$/;
     
     const HOME = process.env[(process.platform == 'win32') ? 'USERPROFILE' : 'HOME'];
     
@@ -21,6 +31,14 @@ export default function(ARGS, CPM, RAW_ARGS) {
         } catch (e) {
             return false;
         }
+    } else if (ARGS.read) {
+        let MATCH = /^.+:.+$/;
+        
+        if (MATCH.test(ARGS.argv.remain[0])) {
+            let [K,V] = ARGS.argv.remain[0].split(/\s*:\s*/);
+        } else {
+            CPM.die(`No, or an invalid 'SEC:key' pair was provided`);
+        }
     }
     else {
         let RUNNER = ARGS.argv.remain[0] || "";
@@ -30,7 +48,7 @@ export default function(ARGS, CPM, RAW_ARGS) {
 
         let [,
             SEC, KEY, VAL
-        ] = RUNNER.match(MATCH);
+        ] = (RUNNER.match(MATCH) || (CPM.die(`Error parsing trio`), []));
         
         function MODIFY() {
             fs.readFile(`${HOME}/.cpmrc`, "utf-8", (ERROR, DATA) => {
@@ -48,14 +66,14 @@ export default function(ARGS, CPM, RAW_ARGS) {
                     const ARRAY = /^(.+)\[\s*\]$/;
                     const OBJECT = /^(.+)\[.+\]$/;
                     if (ARRAY.test(KEY)) {
-                        [, KEY] = KEY.match(ARRAY);
+                        [, KEY] = KEY.match(ARRAY) || [];
                         
                         if (Array.isArray(CONFIG[SEC][KEY]))
                             CONFIG[SEC][KEY].push(VAL);
                         else if (CONFIG[SEC][KEY])
                             CONFIG[SEC] = [VAL];
                     } else if (OBJECT.test(KEY)) {
-                        let [,K, V] = KEY.match(OBJECT);
+                        let [,K, V] = (KEY.match(OBJECT) || []);
                         if (Object.prototype.toString.call(CONFIG[SEC][K]) === "[object Object]") {
                             CONFIG[SEC][K][V] = VAL;
                         } else {

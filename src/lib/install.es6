@@ -24,7 +24,9 @@ export const ARGS = {
 const INDENT = "    ";
 
 export default function(ARGS, CPM) {
-
+    
+    colors; // just ignore this
+    
     const PACKAGE_NAME = ARGS.argv.remain[0];
 
     // die if no package name provided.
@@ -37,7 +39,7 @@ export default function(ARGS, CPM) {
     if (ARGS.info) {
         // get info on package
     }
-    else {
+    else if (ARGS.global) {
         // == PREFORM GLOBAL INSTALL ==
 
         console.log(`Attempting to install ${PACKAGE_NAME.yellow.bold.underline}...`);
@@ -115,11 +117,11 @@ nam=${name}
 Perhaps attempt running this script with '${"sudo".bold}'?`);
                             }
                             else {
-                                console.log("Successfully initalized package");
+                                console.log(`${"Successfully".green} initalized package`);
                                 fs.writeFile(
                                     `${INIT_DIR}/${DIR_NAME}/${name}/config.ini`, STDOUT,
                                     function() {
-                                        console.log("Successfully initalized package");
+                                        console.log(`${"Successfully".green} initalized configuration`);
                                 });
                             }
                         });
@@ -153,6 +155,8 @@ Perhaps attempt running this script with '${"sudo".bold}'?`);
             });
 
         });
+    } else {
+        console.log("will code later")
     }
 
 }

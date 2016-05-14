@@ -7,7 +7,7 @@ const nopt = require('nopt');
 
 import CPM from '../conf/cpm';
 
-const EXEC = function(NAME, CLIARGS) {
+const EXEC = function(NAME, CLIARGS, FATAL) {
 
     process.title = "cpm";
 
@@ -30,19 +30,19 @@ const EXEC = function(NAME, CLIARGS) {
             
             process.title = `cpm: ${NAME}`;
             
-            SCRIPT(nopt(OPTS, SHORTHAND, CLIARGS, 3), new CPM(NAME), CLIARGS);
+            SCRIPT(nopt(OPTS, SHORTHAND, CLIARGS, 3), new CPM(NAME, FATAL), CLIARGS);
             
         }
         else {
             ERR(`'${NAME||""}' is not a Cheesecloth command. See 'cpm help'`);
-            process.exit(1);
+            if (FATAL) process.exit(1);
         }
     });
 
 };
 
 if (require.main === module) {
-    EXEC(process.argv[2] || 'help', process.argv);
+    EXEC(process.argv[2] || 'help', process.argv, true);
 }
 
 export default EXEC;
